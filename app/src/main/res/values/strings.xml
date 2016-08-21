@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android UI Task</string>
+    <string name="link_text"><a href="tel:15000711265"></a></string>
 </resources>

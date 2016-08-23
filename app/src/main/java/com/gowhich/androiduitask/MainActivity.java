@@ -8,10 +8,25 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView1;
     private TextView textView2;
+
+    public int getResourceId(String name) {
+        try {
+            //根据资源的ID的变量名获得Field的对象，还用反射机制来实现的
+            Field field = R.drawable.class.getField(name);
+            //取得并返回资源的id的字段（静态变量）的值，使用反射机制
+            return Integer.parseInt(field.get(null).toString());
+        } catch (Exception e) {
+
+        }
+
+        return 0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

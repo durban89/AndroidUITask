@@ -1,12 +1,17 @@
 package com.gowhich.androiduitask;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -18,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
+    private TextView textView4;
+    private TextView textView5;
+
 
     public int getResourceId(String name) {
         try {
@@ -39,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         textView1 = (TextView) this.findViewById(R.id.textView1);
         textView2 = (TextView) this.findViewById(R.id.textView2);
-        textView3 = (TextView) this.findViewById(R.id.textView2);
+        textView3 = (TextView) this.findViewById(R.id.textView3);
+        textView4 = (TextView) this.findViewById(R.id.textView4);
+        textView5 = (TextView) this.findViewById(R.id.textView5);
 
         //添加html 标签
         String html = "<font color='red'>I Love You!</font><br />";
@@ -60,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         textView3.setTextColor(Color.BLACK);
         textView3.setBackgroundColor(Color.WHITE);
         String textHtml3 = "图像1<img src='image1'>图像2<img src='image2' />图像3<img src='image3' />";
-        textHtml3 += "图像4<a href='http://www.baidu.com'><img src='image4'></a>图像5<img src='image5' />";
+        textHtml3 += "图像4<a href='http://www.baidu.com'><img src='image4' /></a>图像5<img src='image5' />";
 
         CharSequence charSequence1 = Html.fromHtml(textHtml3, new Html.ImageGetter() {
             @Override
@@ -71,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     Log.i("resource", s);
                     if(s.equals("image3")){
-                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
+                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 8, drawable.getIntrinsicHeight() / 8);
                     } else {
-                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 6, drawable.getIntrinsicHeight() / 6);
                     }
                 }catch (Exception e){
 
@@ -85,5 +95,33 @@ public class MainActivity extends AppCompatActivity {
 
         textView3.setText(charSequence1);
         textView3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //点击链接弹出Activity
+        String text1 = "显示Activity1";
+        String text2 = "显示Activity2";
+        //主要用来拆分字符串
+        SpannableString spannableString1 = new SpannableString(text1);
+        SpannableString spannableString2 = new SpannableString(text2);
+
+        spannableString1.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, String1Activity.class);
+                startActivity(intent);
+            }
+        },0 , text1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString2.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, String2Activity.class);
+                startActivity(intent);
+            }
+        },0 , text1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView4.setText(spannableString1);
+        textView5.setText(spannableString2);
+        textView4.setMovementMethod(LinkMovementMethod.getInstance());
+        textView5.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

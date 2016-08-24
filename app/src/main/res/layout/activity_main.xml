@@ -39,4 +39,27 @@
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:background="#FFF"
+        android:padding="20sp"
+        android:textSize="20sp"
+        android:autoLink="all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:background="#FFF"
+        android:padding="20sp"
+        android:textSize="20sp"
+        android:autoLink="all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

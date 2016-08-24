@@ -1,9 +1,12 @@
 package com.gowhich.androiduitask;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -14,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView1;
     private TextView textView2;
+    private TextView textView3;
 
     public int getResourceId(String name) {
         try {
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         textView1 = (TextView) this.findViewById(R.id.textView1);
         textView2 = (TextView) this.findViewById(R.id.textView2);
+        textView3 = (TextView) this.findViewById(R.id.textView2);
 
         //添加html 标签
         String html = "<font color='red'>I Love You!</font><br />";
@@ -50,5 +55,35 @@ public class MainActivity extends AppCompatActivity {
         textString += "我的电话： 15000711265";
         textView2.setText(textString);
         textView2.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //显示表情图像和文字
+        textView3.setTextColor(Color.BLACK);
+        textView3.setBackgroundColor(Color.WHITE);
+        String textHtml3 = "图像1<img src='image1'>图像2<img src='image2' />图像3<img src='image3' />";
+        textHtml3 += "图像4<a href='http://www.baidu.com'><img src='image4'></a>图像5<img src='image5' />";
+
+        CharSequence charSequence1 = Html.fromHtml(textHtml3, new Html.ImageGetter() {
+            @Override
+            public Drawable getDrawable(String s) {
+                //获取系统资源信息，比如图片信息
+                Drawable drawable = getResources().getDrawable(getResourceId(s));
+                //第三个图片文件按照50%的比例进行压缩
+                try{
+                    Log.i("resource", s);
+                    if(s.equals("image3")){
+                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
+                    } else {
+                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                    }
+                }catch (Exception e){
+
+                }
+
+                return drawable;
+            }
+        }, null);
+
+        textView3.setText(charSequence1);
+        textView3.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView3;
     private TextView textView4;
     private TextView textView5;
+    private TextView textView6;
 
 
     public int getResourceId(String name) {
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         textView3 = (TextView) this.findViewById(R.id.textView3);
         textView4 = (TextView) this.findViewById(R.id.textView4);
         textView5 = (TextView) this.findViewById(R.id.textView5);
+        textView6 = (TextView) this.findViewById(R.id.textView6);
 
         //添加html 标签
         String html = "<font color='red'>I Love You!</font><br />";
@@ -75,21 +77,21 @@ public class MainActivity extends AppCompatActivity {
         CharSequence charSequence1 = Html.fromHtml(textHtml3, new Html.ImageGetter() {
             @Override
             public Drawable getDrawable(String s) {
-                //获取系统资源信息，比如图片信息
-                Drawable drawable = getResources().getDrawable(getResourceId(s));
-                //第三个图片文件按照50%的比例进行压缩
-                try{
-                    Log.i("resource", s);
-                    if(s.equals("image3")){
-                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 8, drawable.getIntrinsicHeight() / 8);
-                    } else {
-                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 6, drawable.getIntrinsicHeight() / 6);
-                    }
-                }catch (Exception e){
-
+            //获取系统资源信息，比如图片信息
+            Drawable drawable = getResources().getDrawable(getResourceId(s));
+            //第三个图片文件按照50%的比例进行压缩
+            try{
+                Log.i("resource", s);
+                if(s.equals("image3")){
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 8, drawable.getIntrinsicHeight() / 8);
+                } else {
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 6, drawable.getIntrinsicHeight() / 6);
                 }
+            }catch (Exception e){
 
-                return drawable;
+            }
+
+            return drawable;
             }
         }, null);
 
@@ -123,5 +125,11 @@ public class MainActivity extends AppCompatActivity {
         textView5.setText(spannableString2);
         textView4.setMovementMethod(LinkMovementMethod.getInstance());
         textView5.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //字体跑马灯效果
+        String htmlString6 = "如何把eif格式QQ表情包解压出来，怎么提取出eif格式表情包图片";
+        CharSequence charSequence6 = Html.fromHtml(htmlString6);
+        textView6.setText(charSequence6);
+        textView6.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
